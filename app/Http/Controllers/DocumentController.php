@@ -32,7 +32,12 @@ class DocumentController extends Controller
      */
     public function store(StoreDocumentRequest $request)
     {
-        //
+        Document::create($request->only('name'));
+        // $document = new Document;
+        // $document->name = $request->name;
+        // $document->save();
+
+        return redirect()->route('documents.index')->with('success', 'Document create success');
     }
 
     /**
@@ -40,7 +45,9 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        //
+        return Inertia::render('Documents/Show', [
+            'document' => $document
+        ]);
     }
 
     /**
@@ -48,7 +55,9 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        //
+        return Inertia::render('Documents/Edit', [
+            'document' => $document
+        ]);
     }
 
     /**
@@ -56,7 +65,13 @@ class DocumentController extends Controller
      */
     public function update(UpdateDocumentRequest $request, Document $document)
     {
-        //
+        // $document = Document::find($document->id);
+        // $document->name = $request->name;
+        // $document->save();
+
+        $document->update($request->only('name'));
+
+        return redirect()->route('documents.index')->with('success', 'Document update success');
     }
 
     /**

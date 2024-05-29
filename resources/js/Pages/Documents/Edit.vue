@@ -3,24 +3,35 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import JetInputError from '@/Components/InputError.vue';
 
-defineProps({
-    documents: Array,
+const props = defineProps({
+    document: Object,
 });
 
+// Almacenamos el valor original del nombre del documento
+const originalName = props.document.name;
+
+// Incializamos el formulario
 const form = useForm({
-    name: '',
+    name: props.document.name,
+    id: props.document.id,
 });
 
+// Función para enviar el formulario
 function submit() {
-    form.post('/documents');
-};
+    form.put(`/documents/${props.document.id}`, {
+        onError: (errors) => {
+            // Si hay errores, restauramos el valor original del nombre
+            form.name = originalName;
+        }
+    });
+}
 </script>
 
 <template>
     <AppLayout title="Documents">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Document
+                Edit Document
             </h2>
         </template>
 
@@ -32,7 +43,7 @@ function submit() {
                         <div class="md:col-span-1 pt-5 pl-5">
                             <div class="px-4 sm:px-0">
                             <h3 class="text-lg font-medium leading-6 text-gray-900">Document Information</h3>
-                            <p class="mt-1 text-sm text-gray-600">Enter the information necessary for this document.</p>
+                            <p class="mt-1 text-sm text-gray-600">Enter the necessary information here to update the document name.</p>
                             </div>
                         </div>
                         <div class="mt-5 md:col-span-2 md:mt-0">
