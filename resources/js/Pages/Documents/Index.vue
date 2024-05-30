@@ -1,10 +1,23 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
     documents: Array,
 });
+
+const deleteDocument = (id) => {
+    if (confirm('Are you sure you want to delete this document?')) {
+        router.delete(`/documents/${id}`);
+    }
+};
+
+// const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Se encuentra declarado en el layout app.blade.php
+
+// function submitForm(id) {
+//     // Aquí puedes manejar alguna lógica adicional si es necesario
+//     document.querySelector(`form[action="/documents/${id}"]`).submit();
+// }
 </script>
 
 <template>
@@ -53,7 +66,13 @@ defineProps({
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ document.updated_at }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <Link :href="'/documents/' + document.id + '/edit/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">Edit</Link>
-                                        <Link :href="'/documents/' + document.id + '/delete/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</Link>
+                                        <!-- <Link :href="'/documents/' + document.id + '/delete/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</Link> -->
+                                        <!-- <form :action="'/documents/' + document.id" method="POST" @submit.prevent="submitForm(document.id)">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" :value="csrfToken">
+                                            <button type="submit" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
+                                        </form> -->
+                                        <button @click="deleteDocument(document.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
                                     </td>
                                     <!-- <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900"
