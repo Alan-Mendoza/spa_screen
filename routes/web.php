@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,4 +26,6 @@ Route::middleware([
 
     // Ruta de documentos
     Route::resource('documents', DocumentController::class);
+    // Ruta de Permisos
+    Route::resource('permissions', PermissionController::class);
 });

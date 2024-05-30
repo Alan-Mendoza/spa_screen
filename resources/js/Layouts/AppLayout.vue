@@ -62,6 +62,9 @@ const isActive = (routes) => {
                                 <NavLink :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
                                     Documents
                                 </NavLink>
+                                <NavLink :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
+                                    Permissions
+                                </NavLink>
                             </div>
                         </div>
 
