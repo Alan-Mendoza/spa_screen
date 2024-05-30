@@ -25,6 +25,11 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+// Esta funcion permite que siempre este seleccionado el item del menu, mientras se encuentre en sus rutas
+const isActive = (routes) => {
+    return routes.some(r => route().current(r));
+};
 </script>
 
 <template>
@@ -51,7 +56,10 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('documents.index')" :active="route().current('documents.index')">
+                                <!-- <NavLink :href="route('documents.index')" :active="route().current('documents.index', 'documents.create')">
+                                    Documents
+                                </NavLink> -->
+                                <NavLink :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
                                     Documents
                                 </NavLink>
                             </div>
