@@ -59,14 +59,17 @@ const isActive = (routes) => {
                                 <!-- <NavLink :href="route('documents.index')" :active="route().current('documents.index', 'documents.create')">
                                     Documents
                                 </NavLink> -->
-                                <NavLink :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
-                                    Documents
+                                <NavLink :href="route('users.index')" :active="isActive(['users.index', 'users.create', 'users.edit', 'users.show'])">
+                                    Users
                                 </NavLink>
                                 <NavLink :href="route('roles.index')" :active="isActive(['roles.index', 'roles.create', 'roles.edit', 'roles.show'])">
                                     Roles
                                 </NavLink>
                                 <NavLink :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
                                     Permissions
+                                </NavLink>
+                                <NavLink :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
+                                    Documents
                                 </NavLink>
                             </div>
                         </div>

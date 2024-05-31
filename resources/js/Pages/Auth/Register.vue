@@ -10,6 +10,7 @@ import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
     name: '',
+    username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -39,11 +40,23 @@ const submit = () => {
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
-                    required
                     autofocus
                     autocomplete="name"
                 />
                 <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="username" value="Username" />
+                <TextInput
+                    id="username"
+                    v-model="form.username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autofocus
+                    autocomplete="username"
+                />
+                <InputError class="mt-2" :message="form.errors.username" />
             </div>
 
             <div class="mt-4">
@@ -53,7 +66,6 @@ const submit = () => {
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
-                    required
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
@@ -66,7 +78,6 @@ const submit = () => {
                     v-model="form.password"
                     type="password"
                     class="mt-1 block w-full"
-                    required
                     autocomplete="new-password"
                 />
                 <InputError class="mt-2" :message="form.errors.password" />
@@ -79,7 +90,6 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    required
                     autocomplete="new-password"
                 />
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
