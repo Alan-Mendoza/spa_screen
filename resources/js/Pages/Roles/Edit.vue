@@ -2,10 +2,15 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import JetInputError from '@/Components/InputError.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     role: Object,
+    permissions: Object,
 });
+
+// Inicializa selectedPermissions con los IDs de los permisos asociados al rol
+const selectedPermissions = ref(props.role.permissions.map(permission => permission.id));
 
 // Almacenamos el valor original del nombre del documento
 const originalName = props.role.name;
@@ -14,10 +19,12 @@ const originalName = props.role.name;
 const form = useForm({
     name: props.role.name,
     id: props.role.id,
+    permissions: selectedPermissions.value,
 });
 
 // Función para enviar el formulario
 function submit() {
+    form.permissions = selectedPermissions.value;  // Asegúrate de que los permisos seleccionados se añadan al formulario
     form.put(`/roles/${props.role.id}`, {
         onError: (errors) => {
             // Si hay errores, restauramos el valor original del nombre
@@ -48,20 +55,32 @@ function submit() {
                         </div>
                         <div class="mt-5 md:col-span-2 md:mt-0">
                             <form @submit.prevent="submit()">
-                            <div class="overflow-hidden shadow sm:rounded-md">
-                                <div class="bg-white px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-6 gap-6">
-                                    <div class="col-span-6 sm:col-span-3">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Name Role</label>
-                                        <input v-model="form.name" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-                                        <jet-input-error :message="form.errors.name" class="mt-2" />
+                                <div class="overflow-hidden shadow sm:rounded-md">
+                                    <div class="bg-white px-4 py-5 sm:p-6">
+                                        <div class="grid grid-cols-6 gap-6">
+                                            <div class="col-span-6 sm:col-span-3">
+                                            <label for="name" class="block text-sm font-medium text-gray-700">Name Role</label>
+                                                <input v-model="form.name" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                                <jet-input-error :message="form.errors.name" class="mt-2" />
+                                            </div>
+                                        </div>
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mt-5">Permissions</label>
+                                        <fieldset class="space-y-5">
+                                            <legend class="sr-only">Notifications</legend>
+                                            <div class="relative flex items-start" v-for="(name, id) in permissions" :key="id">
+                                                <div class="flex h-5 items-center">
+                                                    <input :id="'permission-' + id" v-model="selectedPermissions" aria-describedby="comments-description" name="permission[]" type="checkbox" :value="id" :checked="selectedPermissions.includes(id)" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                </div>
+                                                <div class="ml-3 text-sm">
+                                                    <label :for="'permission-' + id" class="font-medium text-gray-700">{{ name }}</label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                                        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
                                     </div>
                                 </div>
-                                </div>
-                                <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                                    <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
-                                </div>
-                            </div>
                             </form>
                         </div>
                         </div>

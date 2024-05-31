@@ -44,6 +44,7 @@ const deleteRole = (id) => {
                                     <tr>
                                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Id</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Permissions</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Guard</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created at</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
@@ -53,6 +54,16 @@ const deleteRole = (id) => {
                                     <tr v-for="role in roles" :key="role.id">
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{ role.id }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ role.name }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <template v-if="role.permissions && role.permissions.length > 0">
+                                            <span v-for="permission in role.permissions" :key="permission.id" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-600 text-white mr-1">
+                                                {{ permission.name }}
+                                            </span>
+                                        </template>
+                                        <template v-else>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white mr-1">No permissions</span>
+                                        </template>
+                                    </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ role.guard_name }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ role.created_at }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
