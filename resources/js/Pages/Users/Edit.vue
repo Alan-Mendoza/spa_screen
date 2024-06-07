@@ -4,34 +4,41 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import JetInputError from '@/Components/InputError.vue';
 
 const props = defineProps({
-    document: Object,
+    user: Object,
 });
 
 // Almacenamos el valor original del nombre del documento
-const originalName = props.document.name;
+const originalName = props.user.name;
+const originalUserName = props.user.username;
+const originalEmail = props.user.email;
 
 // Incializamos el formulario
 const form = useForm({
-    name: props.document.name,
-    id: props.document.id,
+    name: props.user.name,
+    username: props.user.username,
+    email: props.user.email,
+    password: props.user.password,
+    id: props.user.id,
 });
 
 // Función para enviar el formulario
 function submit() {
-    form.put(`/documents/${props.document.id}`, {
+    form.put(`/users/${props.user.id}`, {
         onError: (errors) => {
             // Si hay errores, restauramos el valor original del nombre
             form.name = originalName;
+            form.username = originalUserName;
+            form.email = originalEmail;
         }
     });
 }
 </script>
 
 <template>
-    <AppLayout title="Documents">
+    <AppLayout title="Users">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Document
+                Edit User
             </h2>
         </template>
 
@@ -42,19 +49,37 @@ function submit() {
                         <div class="md:grid md:grid-cols-3 md:gap-6">
                         <div class="md:col-span-1 pt-5 pl-5">
                             <div class="px-4 sm:px-0">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">Document Information</h3>
-                            <p class="mt-1 text-sm text-gray-600">Enter the necessary information here to update the document name.</p>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">User Information</h3>
+                            <p class="mt-1 text-sm text-gray-600">Enter the necessary information here to update the User.</p>
                             </div>
                         </div>
                         <div class="mt-5 md:col-span-2 md:mt-0">
                             <form @submit.prevent="submit()">
                             <div class="overflow-hidden shadow sm:rounded-md">
                                 <div class="bg-white px-4 py-5 sm:p-6">
-                                <div class="grid grid-cols-6 gap-6">
+                                <div class="grid grid-cols-1 gap-6">
                                     <div class="col-span-6 sm:col-span-3">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Name Document</label>
+                                        <label for="name" class="block text-sm font-medium text-gray-700">Fullname</label>
                                         <input v-model="form.name" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                                         <jet-input-error :message="form.errors.name" class="mt-2" />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                                        <input v-model="form.username" type="text" name="username" id="username" autocomplete="given-username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        <jet-input-error :message="form.errors.username" class="mt-2" />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                        <input v-model="form.email" type="email" name="email" id="email" autocomplete="given-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        <jet-input-error :message="form.errors.email" class="mt-2" />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                        <input placeholder="Enter the password only if you change it" v-model="form.password" type="password" name="password" id="password" autocomplete="given-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                        <jet-input-error :message="form.errors.password" class="mt-2" />
                                     </div>
 
                                     <!-- <div class="col-span-6 sm:col-span-3">
