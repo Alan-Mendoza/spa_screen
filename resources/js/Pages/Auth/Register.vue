@@ -40,8 +40,8 @@ const submit = () => {
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
-                    autofocus
                     autocomplete="name"
+                    autofocus
                 />
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
@@ -53,7 +53,6 @@ const submit = () => {
                     v-model="form.username"
                     type="text"
                     class="mt-1 block w-full"
-                    autofocus
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.username" />
@@ -66,7 +65,7 @@ const submit = () => {
                     v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
-                    autocomplete="username"
+                    autocomplete="email"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>

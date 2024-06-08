@@ -17,8 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::with('roles')->get();
+
         return Inertia::render('Users/Index', [
-            'users' => User::all()
+            // 'users' => User::all(),
+            'users' => $users,
         ]);
     }
 
@@ -53,6 +56,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user->load('roles');
+
         return Inertia::render('Users/Show', [
             'user' => $user
         ]);
@@ -63,8 +68,17 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $roles = Role::all()->pluck('name', 'id');
+
+        $user->load('roles');
+
+        // Obtener IDs de los roles del usuario
+        $userRoleIds = $user->roles->pluck('id')->toArray();
+
         return Inertia::render('Users/Edit', [
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles,
+            'userRoleIds' => $userRoleIds,
         ]);
     }
 
@@ -88,6 +102,10 @@ class UserController extends Controller
 
         $user->update($data);
 
+        $roles = $request->input('roles', []);
+
+        $user->syncRoles($roles);
+
         return redirect()->route('users.index');
     }
 
@@ -98,9 +116,8 @@ class UserController extends Controller
     {
         if(Auth::user()->id == $user->id){
             return redirect()->route('users.index');
-        } else {
-            $user->delete();
         }
+        $user->delete();
 
         return redirect()->route('users.index');
     }

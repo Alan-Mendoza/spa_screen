@@ -25,6 +25,16 @@ defineProps({
                         <p class="text-gray-600">{{ user.username }}</p>
                         <p class="text-gray-600">{{ user.email }}</p>
                         <p class="text-gray-600">{{ user.created_at }}</p>
+                        <p class="text-gray-600">
+                            <template v-if="user.roles && user.roles.length > 0">
+                                <span v-for="role in user.roles" :key="role.id" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-600 text-white mr-1">
+                                    {{ role.name }}
+                                </span>
+                            </template>
+                            <template v-else>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white mr-1">No roles</span>
+                            </template>
+                        </p>
                     </div>
                 </div>
             </div>
