@@ -35,3 +35,7 @@ Route::middleware([
     // Ruta de Usuarios
     Route::resource('users', UserController::class);
 });
+
+Route::get('/get-permissions', function () {
+    return auth()->check() ? auth()->user()->jsPermissions() : 0;
+});

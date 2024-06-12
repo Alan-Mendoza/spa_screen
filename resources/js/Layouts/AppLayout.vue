@@ -68,7 +68,7 @@ const isActive = (routes) => {
                                 <NavLink :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
                                     Permissions
                                 </NavLink>
-                                <NavLink :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
+                                <NavLink v-if="can('document-index')" :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
                                     Documents
                                 </NavLink>
                             </div>

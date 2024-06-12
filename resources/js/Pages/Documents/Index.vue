@@ -38,7 +38,7 @@ const deleteDocument = (id) => {
                             <p class="mt-2 text-sm text-gray-700">A list of all the Documents.</p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <Link href="/documents/create" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Document</Link>
+                            <Link v-if="can('document-create')" href="/documents/create" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Document</Link>
                         </div>
                         </div>
                         <div class="mt-8 flex flex-col">
@@ -65,15 +65,15 @@ const deleteDocument = (id) => {
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ document.created_at }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ document.updated_at }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <Link :href="'/documents/' + document.id" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">show</Link>
-                                        <Link :href="'/documents/' + document.id + '/edit/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">Edit</Link>
+                                        <Link v-if="can('document-show')" :href="'/documents/' + document.id" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">show</Link>
+                                        <Link v-if="can('document-edit')" :href="'/documents/' + document.id + '/edit/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">Edit</Link>
                                         <!-- <Link :href="'/documents/' + document.id + '/delete/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</Link> -->
                                         <!-- <form :action="'/documents/' + document.id" method="POST" @submit.prevent="submitForm(document.id)">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" :value="csrfToken">
                                             <button type="submit" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
                                         </form> -->
-                                        <button @click="deleteDocument(document.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
+                                        <button v-if="can('document-destroy')" @click="deleteDocument(document.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
                                     </td>
                                     <!-- <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900"
