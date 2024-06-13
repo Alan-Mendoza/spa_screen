@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class DocumentController extends Controller
@@ -14,6 +15,8 @@ class DocumentController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('document-index'), 403);
+
         return Inertia::render('Documents/Index', [
             'documents' => Document::all()
         ]);
@@ -24,6 +27,8 @@ class DocumentController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('document-create'), 403);
+
         return Inertia::render('Documents/Create');
     }
 
@@ -45,6 +50,8 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
+        abort_if(Gate::denies('document-show'), 403);
+
         return Inertia::render('Documents/Show', [
             'document' => $document
         ]);
@@ -55,6 +62,8 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
+        abort_if(Gate::denies('document-edit'), 403);
+
         return Inertia::render('Documents/Edit', [
             'document' => $document
         ]);
@@ -79,6 +88,8 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
+        abort_if(Gate::denies('document-destroy'), 403);
+
         $document->delete();
 
         return redirect()->route('documents.index')->with('success', 'Document delete success');
