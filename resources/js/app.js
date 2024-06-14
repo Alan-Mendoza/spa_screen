@@ -10,33 +10,33 @@ import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs';
 import App from './Layouts/AppLayout.vue';
 import axios from 'axios';
 
-// axios.get('/get-permissions').then(
-//   response => {
-//     window.Laravel.jsPermissions = response.data;
-//   }
-// );
+axios.get('/get-permissions').then(
+  response => {
+    window.Laravel.jsPermissions = response.data;
+  }
+);
 
-// const app = createApp(App)
-// app.use(LaravelPermissionToVueJS)
-// app.mount('#app')
+const app = createApp(App)
+app.use(LaravelPermissionToVueJS)
+// app.mount('#app') // No descomentar por que ya esta en la funcion createInertiaApp
 
-const fetchPermissions = async () => {
-    try {
-        const response = await axios.get('/get-permissions');
-        window.Laravel.jsPermissions = response.data;
-    } catch (error) {
-        console.error("Failed to fetch permissions", error);
-    }
-};
+// const fetchPermissions = async () => {
+//     try {
+//         const response = await axios.get('/get-permissions');
+//         window.Laravel.jsPermissions = response.data;
+//     } catch (error) {
+//         console.error("Failed to fetch permissions", error);
+//     }
+// };
 
-// Initial fetch
-fetchPermissions();
+// // Initial fetch
+// fetchPermissions();
 
-// Polling every 5 seconds
-setInterval(fetchPermissions, 5000);
+// // Polling every 5 seconds
+// setInterval(fetchPermissions, 5000);
 
-const app = createApp(App);
-app.use(LaravelPermissionToVueJS);
+// const app = createApp(App);
+// app.use(LaravelPermissionToVueJS);
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
