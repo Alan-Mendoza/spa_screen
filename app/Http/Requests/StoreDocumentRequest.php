@@ -22,7 +22,7 @@ class StoreDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'min:5'],
         ];
     }
 
@@ -30,6 +30,7 @@ class StoreDocumentRequest extends FormRequest
     {
         return [
             'name.required' => 'A name document is required',
+            'name.min' => 'The name document must be at least 5 characters',
         ];
     }
 }

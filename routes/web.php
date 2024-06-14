@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -32,6 +33,8 @@ Route::middleware([
 
     // Ruta de documentos
     Route::resource('documents', DocumentController::class);
+    // Ruta de posts
+    Route::resource('posts', PostController::class);
     // Ruta de Permisos
     Route::resource('permissions', PermissionController::class);
     // Ruta de Roles

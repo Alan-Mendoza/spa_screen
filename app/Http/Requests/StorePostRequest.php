@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDocumentRequest extends FormRequest
+class StorePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,8 @@ class UpdateDocumentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'A name document is required',
-            'name.min' => 'The name document must be at least 5 characters',
+            'name.required' => 'A name post is required',
+            'name.min' => 'The name post must be at least 5 characters',
         ];
     }
 }
