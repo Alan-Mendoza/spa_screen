@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -14,6 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('post-index'), 403);
+
         return Inertia::render('Posts/Index', [
             'posts' => Post::all()
         ]);
@@ -32,6 +35,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        abort_if(Gate::denies('post-create'), 403);
+
         Post::create($request->all());
 
         return redirect()->route('posts.index');
@@ -42,7 +47,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        abort_if(Gate::denies('post-show'), 403);
     }
 
     /**
@@ -58,6 +63,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        abort_if(Gate::denies('post-edit'), 403);
+
         $post->update($request->all());
 
         return redirect()->route('posts.index');
@@ -68,6 +75,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        abort_if(Gate::denies('post-destroy'), 403);
+
         $post->delete();
 
         return redirect()->route('posts.index');

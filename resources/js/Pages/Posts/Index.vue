@@ -93,7 +93,7 @@ defineProps({
                                 <p class="mt-2 text-sm text-gray-700">A list of all the Posts.</p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <jet-primary-button class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" @click="openModal('create')">Add Post</jet-primary-button>
+                                <jet-primary-button v-if="can('post-create')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" @click="openModal('create')">Add Post</jet-primary-button>
                             </div>
                         </div>
                         <div class="mt-8 flex flex-col">
@@ -117,9 +117,9 @@ defineProps({
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ post.created_at }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ post.updated_at }}</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        <jet-primary-button class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1" @click="openModal('show', post)">Show</jet-primary-button>
-                                                        <jet-primary-button class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1" @click="openModal('edit', post)">Edit</jet-primary-button>
-                                                        <jet-primary-button class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" @click="mode = 'delete'; selectedPost = post; submit()">Delete</jet-primary-button>
+                                                        <jet-primary-button v-if="can('post-show')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1" @click="openModal('show', post)">Show</jet-primary-button>
+                                                        <jet-primary-button v-if="can('post-edit')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1" @click="openModal('edit', post)">Edit</jet-primary-button>
+                                                        <jet-primary-button v-if="can('post-destroy')" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" @click="mode = 'delete'; selectedPost = post; submit()">Delete</jet-primary-button>
                                                     </td>
                                                 </tr>
                                             </tbody>
