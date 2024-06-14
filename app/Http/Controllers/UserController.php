@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles', 'permissions'])->get();
 
         return Inertia::render('Users/Index', [
             // 'users' => User::all(),
@@ -32,6 +33,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Create', [
             'roles' => Role::all()->pluck('name', 'id'),
+            'permissions' => Permission::all()->pluck('name', 'id'),
         ]);
     }
 
@@ -46,7 +48,9 @@ class UserController extends Controller
         ]);
 
         $roles = $request->input('roles', []);
+        $permissions = $request->input('permissions', []);
         $user->syncRoles($roles);
+        $user->syncPermissions($permissions);
 
         return redirect()->route('users.index');
     }
@@ -57,6 +61,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load('roles');
+        $user->load('permissions');
 
         return Inertia::render('Users/Show', [
             'user' => $user
@@ -69,16 +74,21 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all()->pluck('name', 'id');
+        $permissions = Permission::all()->pluck('name', 'id');
 
         $user->load('roles');
+        $user->load('permissions');
 
         // Obtener IDs de los roles del usuario
         $userRoleIds = $user->roles->pluck('id')->toArray();
+        $userPermissionIds = $user->permissions->pluck('id')->toArray();
 
         return Inertia::render('Users/Edit', [
             'user' => $user,
             'roles' => $roles,
             'userRoleIds' => $userRoleIds,
+            'permissions' => $permissions,
+            'userPermissionIds' => $userPermissionIds,
         ]);
     }
 
@@ -103,8 +113,10 @@ class UserController extends Controller
         $user->update($data);
 
         $roles = $request->input('roles', []);
+        $permissions = $request->input('permissions', []);
 
         $user->syncRoles($roles);
+        $user->syncPermissions($permissions);
 
         return redirect()->route('users.index');
     }

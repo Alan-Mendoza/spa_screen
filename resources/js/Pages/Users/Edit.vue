@@ -8,10 +8,13 @@ const props = defineProps({
     user: Object,
     roles: Object,
     userRoleIds: Array,
+    permissions: Object,
+    userPermissionIds: Array,
 });
 
 // Inicializa selectedRoles con los IDs de los roles asociados al usuario
 const selectedRoles = ref([...props.userRoleIds]);
+const selectedPermissions = ref([...props.userPermissionIds]);
 
 // Almacenamos el valor original del nombre del documento
 const originalName = props.user.name;
@@ -26,14 +29,17 @@ const form = useForm({
     password: props.user.password,
     id: props.user.id,
     roles: selectedRoles.value,
+    permissions: selectedPermissions.value,
 });
 
 // Función para enviar el formulario
 function submit() {
     // Convertir los IDs de roles seleccionados a nombres
     const rolesNames = selectedRoles.value.map(id => props.roles[id]);
+    const PermissionsNames = selectedPermissions.value.map(id => props.permissions[id]);
 
     form.roles = rolesNames;
+    form.permissions = PermissionsNames;
     form.put(`/users/${props.user.id}`, {
         onError: (errors) => {
             // Si hay errores, restauramos los valores originales
@@ -102,6 +108,18 @@ function submit() {
                                                     </div>
                                                     <div class="ml-3 text-sm">
                                                         <label :for="'role-' + id" class="font-medium text-gray-700">{{ name }}</label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <h4 class="block text-sm font-medium text-gray-700 mt-5">Permissions</h4>
+                                            <fieldset class="space-y-5">
+                                                <legend class="sr-only">Permissions</legend>
+                                                <div class="relative flex items-start" v-for="(name, id) in permissions" :key="id">
+                                                    <div class="flex h-5 items-center">
+                                                        <input :id="'permission-' + id" v-model="selectedPermissions" aria-describedby="role-description" type="checkbox" :value="id" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                    </div>
+                                                    <div class="ml-3 text-sm">
+                                                        <label :for="'permission-' + id" class="font-medium text-gray-700">{{ name }}</label>
                                                     </div>
                                                 </div>
                                             </fieldset>

@@ -7,9 +7,11 @@ import { ref } from 'vue';
 defineProps({
     users: Array,
     roles: Object,
+    permissions: Object,
 });
 
 const selectedRoles = ref([]);
+const selectedPermissions = ref([]);
 
 const form = useForm({
     name: '',
@@ -17,10 +19,12 @@ const form = useForm({
     email: '',
     password: '',
     roles: [],
+    permissions: [],
 });
 
 function submit() {
     form.roles = selectedRoles.value;  // Asegúrate de que los roles seleccionados se añadan al formulario
+    form.permissions = selectedPermissions.value;  // Asegúrate de que los roles seleccionados se añadan al formulario
     form.post('/users');
 };
 </script>
@@ -79,6 +83,18 @@ function submit() {
                                                     </div>
                                                     <div class="ml-3 text-sm">
                                                         <label :for="'role-' + id" class="font-medium text-gray-700">{{ name }}</label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <h4 class="block text-sm font-medium text-gray-700 mt-5">Permissions</h4>
+                                            <fieldset class="space-y-5">
+                                                <legend class="sr-only">Permissions</legend>
+                                                <div class="relative flex items-start" v-for="(name, id) in permissions" :key="id">
+                                                    <div class="flex h-5 items-center">
+                                                        <input :id="'permission-' + id" v-model="selectedPermissions" aria-describedby="permission-description" type="checkbox" :value="name" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                    </div>
+                                                    <div class="ml-3 text-sm">
+                                                        <label :for="'permission-' + id" class="font-medium text-gray-700">{{ name }}</label>
                                                     </div>
                                                 </div>
                                             </fieldset>
