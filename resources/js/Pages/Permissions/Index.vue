@@ -32,7 +32,7 @@ const deletePermission = (id) => {
                             <p class="mt-2 text-sm text-gray-700">A list of all the Permissions.</p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <Link href="/permissions/create" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Permission</Link>
+                            <Link v-if="can('permission-create')" href="/permissions/create" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Permission</Link>
                         </div>
                         </div>
                         <div class="mt-8 flex flex-col">
@@ -56,9 +56,9 @@ const deletePermission = (id) => {
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ permission.guard_name }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ permission.created_at }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <Link :href="'/permissions/' + permission.id" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">show</Link>
-                                        <Link :href="'/permissions/' + permission.id + '/edit/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">Edit</Link>
-                                        <button @click="deletePermission(permission.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
+                                        <Link v-if="can('permission-show')" :href="'/permissions/' + permission.id" class="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">show</Link>
+                                        <Link v-if="can('permission-edit')" :href="'/permissions/' + permission.id + '/edit/'" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto mr-1">Edit</Link>
+                                        <button v-if="can('permission-destroy')" @click="deletePermission(permission.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Delete</button>
                                     </td>
                                     </tr>
                                 </tbody>

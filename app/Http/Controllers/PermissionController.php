@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 
@@ -15,6 +16,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('permission-index'), 403);
+
         return Inertia::render('Permissions/Index', [
             'permissions' => Permission::all(),
         ]);
@@ -25,6 +28,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('permission-create'), 403);
+
         return Inertia::render('Permissions/Create');
     }
 
@@ -47,6 +52,8 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
+        abort_if(Gate::denies('permission-show'), 403);
+
         return Inertia::render('Permissions/Show', [
             'permission' => $permission
         ]);
@@ -57,6 +64,8 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        abort_if(Gate::denies('permission-edit'), 403);
+
         return Inertia::render('Permissions/Edit', [
             'permission' => $permission
         ]);
@@ -77,6 +86,8 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
+        abort_if(Gate::denies('permission-destroy'), 403);
+
         $permission->delete();
 
         return redirect()->route('permissions.index')->with('success', 'Permission delete success');

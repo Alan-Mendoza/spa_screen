@@ -30,7 +30,7 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return DB::transaction(function () use ($input) {
-            return tap(User::create([
+            return tap($user = User::create([
                 'name' => $input['name'],
                 'username' => $input['username'],
                 'email' => $input['email'],
@@ -38,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
             ]), function (User $user) {
                 $this->createTeam($user);
             });
+            $user->assignRole('User');
         });
     }
 

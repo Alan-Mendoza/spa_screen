@@ -59,13 +59,13 @@ const isActive = (routes) => {
                                 <!-- <NavLink :href="route('documents.index')" :active="route().current('documents.index', 'documents.create')">
                                     Documents
                                 </NavLink> -->
-                                <NavLink :href="route('users.index')" :active="isActive(['users.index', 'users.create', 'users.edit', 'users.show'])">
+                                <NavLink v-if="can('user-index')" :href="route('users.index')" :active="isActive(['users.index', 'users.create', 'users.edit', 'users.show'])">
                                     Users
                                 </NavLink>
-                                <NavLink :href="route('roles.index')" :active="isActive(['roles.index', 'roles.create', 'roles.edit', 'roles.show'])">
+                                <NavLink v-if="can('role-index')" :href="route('roles.index')" :active="isActive(['roles.index', 'roles.create', 'roles.edit', 'roles.show'])">
                                     Roles
                                 </NavLink>
-                                <NavLink :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
+                                <NavLink v-if="can('permission-index')" :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
                                     Permissions
                                 </NavLink>
                                 <NavLink v-if="can('document-index')" :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
@@ -217,8 +217,20 @@ const isActive = (routes) => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('documents.index')" :active="route().current('documents.index')">
+                        <ResponsiveNavLink v-if="can('user-index')" :href="route('users.index')" :active="isActive(['users.index', 'users.create', 'users.edit', 'users.show'])">
+                            Users
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="can('role-index')" :href="route('roles.index')" :active="isActive(['roles.index', 'roles.create', 'roles.edit', 'roles.show'])">
+                            Roles
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="can('permission-index')" :href="route('permissions.index')" :active="isActive(['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show'])">
+                            Permissions
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="can('document-index')" :href="route('documents.index')" :active="isActive(['documents.index', 'documents.create', 'documents.edit', 'documents.show'])">
                             Documents
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="can('post-index')" :href="route('posts.index')" :active="isActive(['posts.index', 'posts.create', 'posts.edit', 'posts.show'])">
+                            Posts
                         </ResponsiveNavLink>
                     </div>
 
