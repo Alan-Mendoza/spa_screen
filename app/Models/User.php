@@ -71,4 +71,27 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // public function jsPermissions(): array
+    // {
+    //     $roles = $this->getRoleNames()->toArray();
+    //     $permissions = [];
+
+    //     // Obtener todos los roles del usuario y sus permisos
+    //     foreach ($this->roles as $role) {
+    //         foreach ($role->permissions as $permission) {
+    //             $permissions[] = $permission->name;
+    //         }
+    //     }
+
+    //     // Obtener permisos directos del usuario
+    //     foreach ($this->permissions as $permission) {
+    //         $permissions[] = $permission->name;
+    //     }
+
+    //     return [
+    //         'roles' => $roles,
+    //         'permissions' => array_values(array_unique($permissions))
+    //     ];
+    // }
 }

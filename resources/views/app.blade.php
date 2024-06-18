@@ -16,7 +16,15 @@
                 csrfToken: "{{ csrf_token() }}",
                 jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():0 !!}
             }
+            // console.log('Permisos del usuario:', window.Laravel.jsPermissions);
         </script>
+        {{-- <script type="text/javascript">
+            window.Laravel = {
+                csrfToken: "{{ csrf_token() }}",
+                jsPermissions: {!! auth()->check() ? json_encode(auth()->user()->jsPermissions()) : '[]' !!}
+            };
+            console.log('Permisos del usuario:', window.Laravel.jsPermissions);
+        </script> --}}
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
