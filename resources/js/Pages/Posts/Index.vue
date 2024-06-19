@@ -7,6 +7,9 @@ import JetInputError from '@/Components/InputError.vue';
 import JetModal from '@/Components/Modal.vue';
 import JetTextInput from '@/Components/TextInput.vue';
 import { ref } from 'vue';
+import { Spatie } from '@/Scripts/Spatie.js';
+
+const { can } = Spatie();
 
 // Modal
 const acting = ref(false);

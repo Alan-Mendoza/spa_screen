@@ -7,7 +7,8 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-
+import { Spatie } from '@/Scripts/Spatie.js';
+const { can } = Spatie();
 defineProps({
     title: String,
 });
@@ -30,6 +31,8 @@ const logout = () => {
 const isActive = (routes) => {
     return routes.some(r => route().current(r));
 };
+
+
 </script>
 
 <template>
@@ -37,7 +40,6 @@ const isActive = (routes) => {
         <Head :title="title" />
 
         <Banner />
-
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->

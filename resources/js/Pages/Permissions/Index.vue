@@ -1,7 +1,9 @@
 <script setup>
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Spatie } from '@/Scripts/Spatie.js';
 
+const { can } = Spatie();
 defineProps({
     permissions: Array,
 });
