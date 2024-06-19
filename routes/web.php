@@ -18,10 +18,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/get-permissions', function () {
-    return auth()->check() ? auth()->user()->jsPermissions() : 0;
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
